@@ -13,20 +13,10 @@ const router = createRouter({
       path: '/admin',
       component: () => import('../layouts/AdminLayout.vue'),
       meta: { requiresAuth: true },
-      // children: [
-      //   {
-      //     path: 'dashboard',
-      //     name: 'Dashboard',
-      //     component: () => import('../views/Dashboard.vue')
-      //   },
-      //   {
-      //     path: 'articles',
-      //     name: 'Articles',
-      //     component: () => import('../views/Articles.vue')
-      //   },
-      //   // 后续添加更多子路由
-      //   { path: '', redirect: '/admin/dashboard' }
-      // ]
+      children: [
+        { path: 'dashboard', name: 'Dashboard', component: () => import('../views/Dashboard.vue') },
+        { path: '', redirect: '/admin/dashboard' }
+      ]
     },
     { path: '/', redirect: '/admin' }
   ]
