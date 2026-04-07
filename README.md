@@ -1,48 +1,29 @@
-# yinfa-admin
+# 老友记——后台管理系统
 
-This template should help get you started developing with Vue 3 in Vite.
+## 项目简介
 
-## Recommended IDE Setup
+银发社交小程序的后台管理系统，用于管理员发布资讯、管理用户等。
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+## 技术栈
 
-## Recommended Browser Setup
+- Vue3 + Element Plus + Axios
+- 后端 API：Node.js + Express + MySQL
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+## 本地运行
 
-## Type Support for `.vue` Imports in TS
+1. 克隆仓库
+2. npm install
+3. 修改 .env 中的后端地址
+4. npm run dev
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+## 主要功能
 
-## Customize configuration
+- 管理员登录
+- 文章增删改查、分页、封面上传
+- 状态切换（发布/草稿）
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+## 项目结构
 
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Type-Check, Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+- src/views/ - 页面
+- src/components/ - 组件
+- src/api/ - 接口封装
