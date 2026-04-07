@@ -15,7 +15,13 @@ const router = createRouter({
       meta: { requiresAuth: true },
       children: [
         { path: 'dashboard', name: 'Dashboard', component: () => import('../views/Dashboard.vue') },
-        { path: '', redirect: '/admin/dashboard' }
+        { path: '', redirect: '/admin/dashboard' },
+        { path: 'activities', name: 'Activities', component: () => import('../views/Activities.vue') },
+        { path: 'activities/create', name: 'ActivityCreate', component: () => import('../views/ActivityForm.vue') },
+        { path: 'activities/edit/:id', name: 'ActivityEdit', component: () => import('../views/ActivityForm.vue') },
+        { path: 'articles', name: 'Articles', component: () => import('../views/Articles.vue') },
+        { path: 'articles/create', name: 'ArticleCreate', component: () => import('../views/ArticleForm.vue') },
+        { path: 'articles/edit/:id', name: 'ArticleEdit', component: () => import('../views/ArticleForm.vue') },
       ]
     },
     { path: '/', redirect: '/admin' }

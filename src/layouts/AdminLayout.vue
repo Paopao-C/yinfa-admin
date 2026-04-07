@@ -1,10 +1,11 @@
 <template>
   <el-container style="height: 100vh; overflow: hidden">
-    <el-aside width="220px" class="admin-aside">
+    <el-aside :width="isCollapse ? '64px' : '220px'" class="admin-aside" :class="{ 'is-collapse': isCollapse }">
       <div class="aside-header">
         <el-icon class="logo-icon"><House /></el-icon>
-        <h3>老友记管理</h3>
+        <h3 v-show="!isCollapse">老友记管理</h3>
       </div>
+      
       <el-menu
         router
         default-active="/admin/dashboard"
@@ -12,13 +13,30 @@
         background-color="#8B4513"
         text-color="#fff9e6"
         active-text-color="#ffffff"
+        :collapse="isCollapse"
+        :collapse-transition="true"
       >
         <el-menu-item index="/admin/dashboard">
           <el-icon><DataLine /></el-icon>
           <span>仪表盘</span>
         </el-menu-item>
+        <el-menu-item index="/admin/activities">
+          <el-icon><Calendar /></el-icon>
+          <span>活动管理</span>
+        </el-menu-item>
+        <el-menu-item index="/admin/articles">
+          <el-icon><Document /></el-icon>
+          <span>文章管理</span>
+        </el-menu-item>
         <!-- 后续添加其他菜单 -->
       </el-menu>
+      <div class="collapse-btn" @click="toggleCollapse">
+        <el-icon>
+          <Fold v-if="!isCollapse" />
+          <Expand v-else />
+        </el-icon>
+        <span v-show="!isCollapse" class="collapse-text">{{ isCollapse ? '展开' : '收起' }}</span>
+      </div>
     </el-aside>
     <el-container class="admin-main-container">
       <el-header class="admin-header">
@@ -51,7 +69,14 @@
 </template>
 
 <script setup lang="ts">
-import { DataLine, House } from '@element-plus/icons-vue'
+import { ref } from 'vue'
+import { DataLine, House, Fold, Expand,Calendar,Document } from '@element-plus/icons-vue'
+
+const isCollapse = ref(false)
+
+const toggleCollapse = () => {
+  isCollapse.value = !isCollapse.value
+}
 </script>
 
 <style>
@@ -77,9 +102,11 @@ body {
 
 <style scoped>
 .admin-aside {
-  background-color: #8b4513;
+  background-color: #654321;
   box-shadow: 2px 0 10px rgba(139, 69, 19, 0.3);
   overflow-y: auto;
+  transition: width 0.3s ease;
+  position: relative;
 }
 
 .aside-header {
@@ -88,7 +115,10 @@ body {
   padding: 20px;
   border-bottom: 1px solid rgba(255, 249, 230, 0.2);
   margin-bottom: 10px;
+  justify-content: center;
 }
+
+
 
 .logo-icon {
   font-size: 24px;
@@ -98,13 +128,44 @@ body {
 
 .aside-header h3 {
   color: #fff9e6;
-  font-size: 18px;
+  font-size: 25px;
   font-weight: 600;
   margin: 0;
+  white-space: nowrap;
 }
+
+.collapse-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0;
+  cursor: pointer;
+  color: #fff9e6;
+  transition: all 0.3s ease;
+  border-bottom: 1px solid rgba(255, 249, 230, 0.2);
+}
+
+.collapse-btn:hover {
+  background-color: rgba(255, 249, 230, 0.1);
+  color: #ffffff;
+}
+
+.collapse-btn .el-icon {
+  font-size: 18px;
+}
+
 
 .admin-menu {
   border-right: none;
+}
+
+.admin-menu.el-menu--collapse {
+  width: 64px;
+}
+
+.admin-menu.el-menu--collapse .el-menu-item {
+  padding: 0 !important;
+  justify-content: center;
 }
 
 .admin-main-container {
