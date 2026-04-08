@@ -23,4 +23,10 @@ export default defineConfigWithVueTs(
   ...pluginOxlint.buildFromOxlintConfigFile('.oxlintrc.json'),
 
   skipFormatting,
+
+  {
+    rules: {
+      'vue/no-v-model-argument': 'off'
+    }
+  }
 )

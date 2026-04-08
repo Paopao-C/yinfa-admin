@@ -28,6 +28,18 @@
           <el-icon><Document /></el-icon>
           <span>文章管理</span>
         </el-menu-item>
+        <el-menu-item index="/admin/circles">
+          <el-icon><Grid /></el-icon>
+          <span>圈子管理</span>
+        </el-menu-item>
+        <el-menu-item index="/admin/users">
+          <el-icon><User /></el-icon>
+          <span>用户管理</span>
+        </el-menu-item>
+        <el-menu-item index="/admin/posts">
+          <el-icon><ChatLineSquare /></el-icon>
+          <span>圈子文章</span>
+        </el-menu-item>
         <!-- 后续添加其他菜单 -->
       </el-menu>
       <div class="collapse-btn" @click="toggleCollapse">
@@ -43,6 +55,7 @@
         <div class="header-content">
           <h2>老友记后台管理</h2>
           <div class="header-actions">
+            <!-- el-dropdown: 下拉菜单容器 -->
             <el-dropdown>
               <span class="user-info">
                 <el-avatar
@@ -51,6 +64,7 @@
                 />
                 <span class="user-name">管理员</span>
               </span>
+              <!-- #dropdown 插槽: 定义下拉菜单的内容 -->
               <template #dropdown>
                 <el-dropdown-menu>
                   <el-dropdown-item>个人中心</el-dropdown-item>
@@ -70,7 +84,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { DataLine, House, Fold, Expand,Calendar,Document } from '@element-plus/icons-vue'
+import { DataLine, House, Fold, Expand,Calendar,Document,Grid,User,ChatLineSquare } from '@element-plus/icons-vue'
 
 const isCollapse = ref(false)
 

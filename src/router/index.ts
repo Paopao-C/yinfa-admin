@@ -22,6 +22,11 @@ const router = createRouter({
         { path: 'articles', name: 'Articles', component: () => import('../views/Articles.vue') },
         { path: 'articles/create', name: 'ArticleCreate', component: () => import('../views/ArticleForm.vue') },
         { path: 'articles/edit/:id', name: 'ArticleEdit', component: () => import('../views/ArticleForm.vue') },
+        { path: 'circles', name: 'Circles', component: () => import('../views/Circles.vue') },
+        { path: 'users', name: 'Users', component: () => import('../views/Users.vue') },
+        { path: 'posts', name: 'Posts', component: () => import('../views/Posts.vue') },
+        { path: 'posts/create', name: 'PostCreate', component: () => import('../views/PostForm.vue') },
+{ path: 'posts/edit/:id', name: 'PostEdit', component: () => import('../views/PostForm.vue') },
       ]
     },
     { path: '/', redirect: '/admin' }

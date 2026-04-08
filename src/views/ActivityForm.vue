@@ -34,12 +34,11 @@
             value-format="YYYY-MM-DD HH:mm:ss"
           />
         </el-form-item>
+        <el-form-item label="所在城市">
+          <el-input v-model="form.city" placeholder="（例如：长沙市）" />
+        </el-form-item>
         <el-form-item label="地点">
           <el-input v-model="form.address" placeholder="详细地址" />
-        </el-form-item>
-        <el-form-item label="经纬度">
-          <el-input v-model="form.latitude" placeholder="纬度" style="width: 45%; margin-right: 10%" />
-          <el-input v-model="form.longitude" placeholder="经度" style="width: 45%" />
         </el-form-item>
         <el-form-item label="联系人">
           <el-input v-model="form.contactPerson" />
@@ -79,9 +78,8 @@ const form = ref({
   coverImage: '',
   startTime: '',
   endTime: '',
+  city: '',
   address: '',
-  latitude: '',
-  longitude: '',
   contactPerson: '',
   contactPhone: '',
   remainingSlots: 0,
@@ -89,21 +87,36 @@ const form = ref({
 })
 const coverFileList = ref([])
 
-const handleUpload = (file: File) => {
-  // 实际应调用后端上传接口，这里简化使用临时URL
-  const url = URL.createObjectURL(file)
-  form.value.coverImage = url
-  coverFileList.value = [{ name: file.name, url }]
-  return false
-}
-const handlePreview = (file: any) => { window.open(file.url) }
-const handleRemove = () => { form.value.coverImage = ''; coverFileList.value = [] }
+const handleUpload = async (file: File) => {
+  const formData = new FormData();
+  formData.append('file', file);
+  const token = localStorage.getItem('adminToken');
+  try {
+    const res = await axios.post('/api/admin/upload', formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+    // 上传成功，保存返回的 URL
+    form.value.coverImage = res.data.url;
+    coverFileList.value = [{ name: file.name, url: res.data.url }];
+    ElMessage.success('上传成功');
+  } catch (err) {
+    ElMessage.error('上传失败');
+    console.error(err);
+  }
+  return false; // 阻止自动上传
+};
 
 const fetchDetail = async (id: number) => {
   const token = localStorage.getItem('adminToken')
   const res = await axios.get(`/api/admin/activities/${id}`, {
     headers: { Authorization: `Bearer ${token}` }
   })
+  // 添加调试信息，查看后端返回的实际数据结构
+  console.log('后端返回的数据:', res.data)
+  
   form.value = res.data
   if (form.value.coverImage) {
     coverFileList.value = [{ name: '封面', url: form.value.coverImage }]
@@ -111,6 +124,19 @@ const fetchDetail = async (id: number) => {
 }
 
 const save = async () => {
+   // 打印即将提交的数据，方便调试
+   console.log('即将提交的数据:', form.value)
+  // 添加数据验证
+  if (!form.value.city) {
+    ElMessage.error('请填写所在城市')
+    return
+  }
+  
+  if (!form.value.address) {
+    ElMessage.error('请填写活动地点')
+    return
+  }
+
   const token = localStorage.getItem('adminToken')
   const method = isEdit.value ? 'put' : 'post'
   const url = isEdit.value ? `/api/admin/activities/${route.params.id}` : '/api/admin/activities'

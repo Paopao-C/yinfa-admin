@@ -24,6 +24,8 @@
       <el-table :data="list" border style="width: 100%">
         <el-table-column prop="id" label="ID" width="80" />
         <el-table-column prop="title" label="标题" />
+        <el-table-column prop="city" label="所在城市" />
+        <el-table-column prop="address" label="详细地址" />
         <el-table-column prop="startTime" label="开始时间" width="160">
           <template #default="{ row }">{{ formatDateTime(row.startTime) }}</template>
         </el-table-column>
@@ -54,8 +56,8 @@
       />
     </el-card>
 
-    <!-- 报名名单对话框 -->
-    <el-dialog v-model="favoritesVisible" title="报名名单" width="600px">
+    <!-- 收藏名单对话框 -->
+    <el-dialog v-model="favoritesVisible" title="收藏名单" width="600px">
       <el-table :data="favoritesList" border>
         <el-table-column prop="nickname" label="昵称" />
         <el-table-column prop="mobile" label="手机号" />
@@ -89,7 +91,7 @@ const statusFilter = ref('')
 
 const favoritesVisible = ref(false)
 const favoritesList = ref([])
-const currentActivityId = ref(null)
+const currentActivityId = ref<number | null>(null)
 
 const fetchList = async () => {
   const token = localStorage.getItem('adminToken')
@@ -97,6 +99,7 @@ const fetchList = async () => {
     params: { page: page.value, limit: limit.value, keyword: keyword.value, status: statusFilter.value },
     headers: { Authorization: `Bearer ${token}` }
   })
+  console.log('后端返回的数据:', res.data)
   list.value = res.data.data
   total.value = res.data.total
 }

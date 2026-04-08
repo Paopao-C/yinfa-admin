@@ -64,14 +64,27 @@ const form = ref({
 })
 const coverFileList = ref([])
 
-const handleUpload = (file: File) => {
-  const url = URL.createObjectURL(file)
-  form.value.coverImage = url
-  coverFileList.value = [{ name: file.name, url }]
-  return false
-}
-const handlePreview = (file: any) => { window.open(file.url) }
-const handleRemove = () => { form.value.coverImage = ''; coverFileList.value = [] }
+const handleUpload = async (file: File) => {
+  const formData = new FormData();
+  formData.append('file', file);
+  const token = localStorage.getItem('adminToken');
+  try {
+    const res = await axios.post('/api/admin/upload', formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+    // 上传成功，保存返回的 URL
+    form.value.coverImage = res.data.url;
+    coverFileList.value = [{ name: file.name, url: res.data.url }];
+    ElMessage.success('上传成功');
+  } catch (err) {
+    ElMessage.error('上传失败');
+    console.error(err);
+  }
+  return false; // 阻止自动上传
+};
 
 const fetchDetail = async (id: number) => {
   const token = localStorage.getItem('adminToken')
