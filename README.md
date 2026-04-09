@@ -4,6 +4,15 @@
 
 银发社交小程序的后台管理系统，用于管理员发布资讯、管理用户等。
 
+## 项目演示
+
+![活动管理界面](src/assets/images/readme01.png)
+![新建活动界面](src/assets/images/readme02.png)
+![养生文章管理界面](src/assets/images/readme03.png)
+![养生文章编辑界面](src/assets/images/readme04.png)
+![圈子动态管理管理界面](src/assets/images/readme05.png)
+![用户管理界面](src/assets/images/readme06.png)
+
 ## 技术栈
 
 - Vue3 + Element Plus + Axios
